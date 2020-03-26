@@ -28,11 +28,11 @@ steps:
     mkdir source
     cd source
     repo init -u https://github.com/LineageOS/android.git -b lineage-16.0
-    ll
+    ls -a
 
 - bash: |
     tar -zcvf output.tar.gz ./source
-    ll output.tar.gz
+    ls -a output.tar.gz
     export OUTPUT_PATH=`pwd`:"output.tar.gz"
     
 - task: PublishBuildArtifacts@1
