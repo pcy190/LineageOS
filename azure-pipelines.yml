@@ -30,11 +30,16 @@ steps:
     repo init -u https://github.com/LineageOS/android.git -b lineage-16.0
 
 - bash: |
+    cd source
+    repo sync -c -j8 --no-clone-bundle
+
+- bash: |
     tar -zcvf output.tar.gz ./source
     ls -la | grep output
     export OUTPUT_PATH=`pwd`:"output.tar.gz"
     echo OUTPUT_PATH
-    
+
+
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: 'output.tar.gz'
