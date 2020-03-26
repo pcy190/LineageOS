@@ -1,0 +1,42 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+
+- script: |
+    echo Add other tasks to build, test, and deploy your project.
+    echo See https://aka.ms/yaml
+  displayName: 'Run a multi-line script'
+
+- bash: |
+    sudo apt-get update
+    sudo apt-get install -y git python python3 
+    mkdir ~/bin
+    PATH=~/bin:$PATH
+    curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+    sudo chmod a+x ~/bin/repo
+    mkdir source
+    cd source
+    repo init -u https://github.com/LineageOS/android.git -b lineage-16.0
+    ll
+
+- bash: |
+    tar -zcvf output.tar.gz ./source
+    ll output.tar.gz
+    export OUTPUT_PATH=`pwd`:"output.tar.gz"
+    
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(OUTPUT_PATH)'
+    ArtifactName: 'SourceOutput'
+    publishLocation: 'Container'
