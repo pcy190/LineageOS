@@ -28,15 +28,15 @@ steps:
     mkdir source
     cd source
     repo init -u https://github.com/LineageOS/android.git -b lineage-16.0
-    ls -a
 
 - bash: |
     tar -zcvf output.tar.gz ./source
-    ls -a output.tar.gz
+    ls -la | grep output
     export OUTPUT_PATH=`pwd`:"output.tar.gz"
+    echo OUTPUT_PATH
     
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(OUTPUT_PATH)'
+    PathtoPublish: 'output.tar.gz'
     ArtifactName: 'SourceOutput'
     publishLocation: 'Container'
