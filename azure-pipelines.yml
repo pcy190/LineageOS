@@ -28,10 +28,13 @@ steps:
     mkdir source
     cd source
     repo init -u https://github.com/LineageOS/android.git -b lineage-16.0
+  displayName: 'Init repo'
 
 - bash: |
+    PATH=~/bin:$PATH
     cd source
     repo sync -c -j8 --no-clone-bundle
+  displayName: 'Sync Lineage Source'
 
 - bash: |
     tar -zcvf output.tar.gz ./source
